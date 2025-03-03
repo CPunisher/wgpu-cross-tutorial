@@ -1,10 +1,8 @@
-use std::sync::Arc;
-
 pub mod renderer;
 
 pub struct InitWgpuOptions {
     #[cfg(any(target_os = "macos", target_os = "windows"))]
-    pub surface: Arc<winit::window::Window>,
+    pub surface: std::sync::Arc<winit::window::Window>,
     #[cfg(not(any(target_os = "macos", target_os = "windows")))]
     pub surface: *mut std::ffi::c_void,
     pub backends: wgpu::Backends,
