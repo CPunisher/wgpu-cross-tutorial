@@ -1,8 +1,9 @@
 [workspace]
-members = ["crates/desktop", "crates/wgpu-cross"]
+members = ["crates/desktop", "crates/swift-binding", "crates/wgpu-cross"]
 resolver = "2"
 
 [workspace.dependencies]
 wgpu = "24.0.1"
 winit = "0.30.9"
 wgpu-cross = { path = "./crates/wgpu-cross" }
+pollster = "0.4.0"

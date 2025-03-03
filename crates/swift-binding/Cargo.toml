@@ -1,10 +1,12 @@
 [package]
-name = "desktop"
+name = "swift-binding"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+crate-type = ["staticlib"]
+
 [dependencies]
 wgpu = { workspace = true }
-winit = { workspace = true }
 wgpu-cross = { workspace = true }
 pollster = { workspace = true }
