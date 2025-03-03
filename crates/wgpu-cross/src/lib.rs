@@ -5,7 +5,6 @@ pub struct InitWgpuOptions {
     pub surface: std::sync::Arc<winit::window::Window>,
     #[cfg(not(any(target_os = "macos", target_os = "windows")))]
     pub surface: *mut std::ffi::c_void,
-    pub backends: wgpu::Backends,
     pub width: u32,
     pub height: u32,
 }
@@ -18,9 +17,14 @@ pub struct WgpuContext {
 }
 
 pub async fn init_wgpu(options: InitWgpuOptions) -> WgpuContext {
+    #[cfg(any(target_os = "macos", target_os = "windows"))]
+    let backends = wgpu::Backends::all();
+    #[cfg(not(any(target_os = "macos", target_os = "windows")))]
+    let backends = wgpu::Backends::METAL;
+
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {
         // 1. 选择图形驱动后端，创建 Instance
-        backends: options.backends,
+        backends,
         ..Default::default()
     });
 

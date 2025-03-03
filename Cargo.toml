@@ -1,9 +1,8 @@
-[package]
-name = "wgpu-cross"
-version = "0.1.0"
-edition = "2024"
+[workspace]
+members = ["crates/desktop", "crates/wgpu-cross"]
+resolver = "2"
 
-[dependencies]
-pollster = "0.4.0"
+[workspace.dependencies]
 wgpu = "24.0.1"
 winit = "0.30.9"
+wgpu-cross = { path = "./crates/wgpu-cross" }

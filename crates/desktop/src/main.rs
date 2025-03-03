@@ -1,6 +1,5 @@
 use std::sync::Arc;
 
-use wgpu::Backends;
 use wgpu_cross::{InitWgpuOptions, WgpuContext, init_wgpu, renderer::Renderer};
 use winit::{
     application::ApplicationHandler,
@@ -32,7 +31,6 @@ impl ApplicationHandler for WgpuDemo {
 
         let context = pollster::block_on(init_wgpu(InitWgpuOptions {
             surface: window.clone(),
-            backends: Backends::all(),
             width: window.inner_size().width,
             height: window.inner_size().height,
         }));
