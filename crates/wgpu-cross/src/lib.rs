@@ -17,14 +17,9 @@ pub struct WgpuContext {
 }
 
 pub async fn init_wgpu(options: InitWgpuOptions) -> WgpuContext {
-    #[cfg(any(target_os = "macos", target_os = "windows"))]
-    let backends = wgpu::Backends::all();
-    #[cfg(not(any(target_os = "macos", target_os = "windows")))]
-    let backends = wgpu::Backends::METAL;
-
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {
-        // 1. 选择图形驱动后端，创建 Instance
-        backends,
+        // 1. 选择图形驱动后端，创建 Instance。这里启用所有的后端根据实际需要加载
+        backends: wgpu::Backends::all(),
         ..Default::default()
     });
 
