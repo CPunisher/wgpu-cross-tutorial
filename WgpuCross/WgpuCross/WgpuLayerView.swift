@@ -3,15 +3,15 @@ import MetalKit
 
 struct WgpuLayerView: UIViewRepresentable {
     
-    typealias UIViewType = WgpuMTKView
+    typealias UIViewType = MTKView
     
     func makeCoordinator() -> Coordinator {
         let coordinator = Coordinator()
         return coordinator
     }
     
-    func makeUIView(context: Context) -> WgpuMTKView {
-        let view = WgpuMTKView()
+    func makeUIView(context: Context) -> MTKView {
+        let view = MTKView()
         view.delegate = context.coordinator
         view.device = MTLCreateSystemDefaultDevice()
         view.preferredFramesPerSecond = 60
@@ -19,7 +19,7 @@ struct WgpuLayerView: UIViewRepresentable {
         return view
     }
     
-    func updateUIView(_ uiView: WgpuMTKView, context: Context) {
+    func updateUIView(_ uiView: MTKView, context: Context) {
     }
     
     class Coordinator: NSObject, MTKViewDelegate {
@@ -37,6 +37,4 @@ struct WgpuLayerView: UIViewRepresentable {
             }
         }
     }
-    
-    class WgpuMTKView: MTKView {}
 }
