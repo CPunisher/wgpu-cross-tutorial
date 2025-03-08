@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/desktop", "crates/swift-binding", "crates/wgpu-cross"]
+members = ["crates/desktop", "crates/swift-binding", "crates/web", "crates/wgpu-cross"]
 resolver = "2"
 
 [workspace.dependencies]

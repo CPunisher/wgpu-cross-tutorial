@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>wgpu cross</title>
+  </head>
+  <body>
+    <canvas id="wgpu" />
+    <script type="module">
+      import init, { WgpuWrapper } from "./crates/web/pkg/web.js";
+      await init();
+
+      console.log("WASM Loaded");
+      const wgpu = await new WgpuWrapper("wgpu");
+      requestAnimationFrame(render);
+
+      function render() {
+        wgpu.render();
+        requestAnimationFrame(render);
+      }
+    </script>
+  </body>
+</html>
