@@ -13,6 +13,7 @@ pub(crate) struct App {
 impl App {
     pub async fn init(canvas: HtmlCanvasElement, width: u32, height: u32) -> Self {
         let context = wgpu_cross::init_wgpu(wgpu_cross::InitWgpuOptions {
+            // Create handles from canvas element
             target: wgpu::SurfaceTargetUnsafe::RawHandle {
                 raw_display_handle: {
                     let handle = WebDisplayHandle::new();

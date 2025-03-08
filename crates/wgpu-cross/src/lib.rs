@@ -15,15 +15,15 @@ pub struct WgpuContext {
 
 pub async fn init_wgpu(options: InitWgpuOptions) -> WgpuContext {
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {
-        // 1. 选择图形驱动后端，创建 Instance。这里启用所有的后端根据实际需要加载
+        // 1. Select graphics backends and create `Instance`. We enable all backends here.
         backends: wgpu::Backends::all(),
         ..Default::default()
     });
 
-    // 2. 利用 Instance 创建 wgpu Surface 的封装
+    // 2. Create wgpu `Surface` with instance
     let surface = unsafe { instance.create_surface_unsafe(options.target).unwrap() };
 
-    // 3. 利用 Instance 创建 Adapter
+    // 3. Request `Adapter`` from instance
     let adapter = instance
         .request_adapter(&wgpu::RequestAdapterOptions {
             power_preference: wgpu::PowerPreference::default(),
@@ -33,7 +33,7 @@ pub async fn init_wgpu(options: InitWgpuOptions) -> WgpuContext {
         .await
         .unwrap();
 
-    // 4. 利用 Adapter 创建 Device 和 Queue
+    // 4. Request `Device` and `Queue` from adapter
     let (device, queue) = adapter
         .request_device(
             &wgpu::DeviceDescriptor {
@@ -47,7 +47,7 @@ pub async fn init_wgpu(options: InitWgpuOptions) -> WgpuContext {
         .await
         .unwrap();
 
-    // 5. 创建 SurfaceConfig，用于配置 Surface 的像素颜色格式、长宽、Alpha Mode 等
+    // 5. Create `SurfaceConfig` to config the pixel format, width and height, and alpha mode etc.
     let caps = surface.get_capabilities(&adapter);
     let config = wgpu::SurfaceConfiguration {
         usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
@@ -60,6 +60,7 @@ pub async fn init_wgpu(options: InitWgpuOptions) -> WgpuContext {
         desired_maximum_frame_latency: 2,
     };
     surface.configure(&device, &config);
+
     WgpuContext {
         surface,
         device,
