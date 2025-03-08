@@ -30,7 +30,7 @@ impl ApplicationHandler for WgpuDemo {
         self.window = Some(window.clone());
 
         let context = pollster::block_on(init_wgpu(InitWgpuOptions {
-            surface: window.clone(),
+            target: unsafe { wgpu::SurfaceTargetUnsafe::from_window(&window) }.unwrap(),
             width: window.inner_size().width,
             height: window.inner_size().height,
         }));

@@ -10,7 +10,7 @@ pub(crate) struct App {
 impl App {
     pub async fn init(metal_layer: *mut c_void, width: u32, height: u32) -> Self {
         let context = wgpu_cross::init_wgpu(wgpu_cross::InitWgpuOptions {
-            surface: metal_layer,
+            target: wgpu::SurfaceTargetUnsafe::CoreAnimationLayer(metal_layer),
             width,
             height,
         })

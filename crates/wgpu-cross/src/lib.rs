@@ -1,10 +1,7 @@
 pub mod renderer;
 
 pub struct InitWgpuOptions {
-    #[cfg(any(target_os = "macos", target_os = "windows"))]
-    pub surface: std::sync::Arc<winit::window::Window>,
-    #[cfg(not(any(target_os = "macos", target_os = "windows")))]
-    pub surface: *mut std::ffi::c_void,
+    pub target: wgpu::SurfaceTargetUnsafe,
     pub width: u32,
     pub height: u32,
 }
@@ -24,16 +21,7 @@ pub async fn init_wgpu(options: InitWgpuOptions) -> WgpuContext {
     });
 
     // 2. 利用 Instance 创建 wgpu Surface 的封装
-    #[cfg(any(target_os = "macos", target_os = "windows"))]
-    let surface = instance.create_surface(options.surface.clone()).unwrap();
-    #[cfg(not(any(target_os = "macos", target_os = "windows")))]
-    let surface = unsafe {
-        instance
-            .create_surface_unsafe(wgpu::SurfaceTargetUnsafe::CoreAnimationLayer(
-                options.surface.cast(),
-            ))
-            .unwrap()
-    };
+    let surface = unsafe { instance.create_surface_unsafe(options.target).unwrap() };
 
     // 3. 利用 Instance 创建 Adapter
     let adapter = instance
